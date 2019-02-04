@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pl">
+<meta charset="utf-8">
+<head>
+<title>gra1- pingpong</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+<body>
+<canvas >
+	
+</canvas>
+
+<script>
+	
+const canvas = document.querySelector('canvas');   //pobiera canvas do sripta
+const ctx = canvas.getContext('2d');                // wywołujemy metody by nadać cechy canvaasowi
+
+canvas.width =1000;
+canvas.height = 500;
+
+const cw = canvas.width;
+const ch = canvas.height;
+
+const ballSize =20; // wielkość piłki
+let ballX = cw / 2 - ballSize/2 // od 490 do 510
+let ballY = ch / 2 - ballSize/2 // od 240 do 260 px
+
+const paddelHeight = 100;
+const paddelWidth = 20;
+
+const playerX = 70; // odleglosc rakietki od krawedzi 1 
+const aix = 910;  // odleglosc rakietki 2 ok krawedzi 1
+
+let playerY = 200;
+let aiY =200;
+
+const lineWidth = 6;
+const lineHeight = 16;
+
+let ballSpeedX =6 ; // lewo prawo 
+let ballSpeedY =6; // góra dół
+
+
+
+function  player() {
+
+ctx.fillStyle = "green";
+ctx.fillRect(playerX,playerY,paddelWidth,paddelHeight);
+
+} 
+
+
+function  AI() {
+
+ctx.fillStyle = "yellow";
+ctx.fillRect(aix,aiY,paddelWidth,paddelHeight);
+
+} 
+
+
+function ball(){
+
+ctx.fillStyle = "white";
+ctx.fillRect(ballX, ballY, ballSize, ballSize); //rozmieszczenie piłki odejmujemy aby wyśrodkować
+
+ballX += ballSpeedX;  //lewo , prawo
+ballY += ballSpeedY; 
+
+if(ballY <= 0 || ballY + ballSize >= ch)
+{
+	ballSpeedY = -ballSpeedY;
+}
+
+if (ballX <=0 || ballX + ballSize >= cw)
+{
+ballSpeedX = -ballSpeedX;
+}
+}
+function table(){
+  ctx.fillStyle = "black";
+  ctx.fillRect(0,0,cw,ch);   //rysyuj 2 punkty początkowe i 2 punkty koncowe
+
+
+for(let linePosition =20; linePosition < ch ;linePosition += 30) {
+
+ctx.fillStyle ="grey";
+ctx.fillRect(cw /2 -lineWidth /2 ,linePosition , lineWidth, lineHeight )
+
+}
+
+}
+
+topCanvas= canvas.offsetTop;     // odleglosc canvas od krawedzi 
+console.log(topCanvas)
+
+
+
+
+function playerposition(e){
+//console.log("pozycja myszy to " + (e.clientY - topCanvas));
+
+playerY = e.clientY - topCanvas - paddelHeight/2;
+
+
+if (playerY>= ch-paddelHeight){
+
+playerY= ch-paddelHeight
+
+}
+if(playerY <= 0) 
+{
+
+playerY =0;
+
+}
+aiY= playerY;
+}
+
+
+
+
+canvas.addEventListener("mousemove", playerposition)
+
+
+
+function game(){
+table();
+ball();
+player();
+AI();
+}
+setInterval(game,1000 / 60);
+</script>
+
+
+
+
+
+</body>
+</html>
