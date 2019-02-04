@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="pl">
+<head>
+	<title>moja gra w pingponga</title>
+	<script type="text/javascript"></script>
+<style>
+ canvas{
+border: 3px solid #fff;
+
+}
+
+
+
+body{
+	
+margin: 0;
+padding:0;
+display: flex;
+align-items: center;
+justify-content: center;
+height: 100vh;
+background-color: #393939; 
+}
+</style>
+
+
+
+
+
+
+</head>
+<body>
+<canvas></canvas>	
+
+<script>
+
+const canvas = document.querySelector('canvas');   //pobiera canvas do sripta     lub 
+const ctx = canvas.getContext('2d');   
+
+canvas.width = 1200;
+canvas.height = 600;
+
+const cw = canvas.width;
+const ch =canvas.height;
+
+const ballsize = 22;
+let ballX = cw/2 - ballsize/2;          //miejsce, położenie piłki  0dejmujemy bo piłka też zajmuj emiejsce
+let ballY = ch/2 - ballsize/2;
+
+const paddleW = 16;
+const paddleH = 70;                     // ważne przy zmianie wysokości by zminić też possition X up
+
+const possitionXLEFT = 80;
+let possitionXUP =265;
+
+const possitionYlEFT = 1104;
+let possitionYUP = 265;
+
+const linewidth = 4;
+const linheight = 8;
+
+let balspeedX = 3;
+let balspeedY= 3;
+
+
+function table()
+{
+
+ctx.fillStyle = '#FF5A09';
+ctx.fillRect(0,0,cw,ch);
+
+for (let lineposition = 20; lineposition <ch ;lineposition+=30)
+{
+
+ctx.fillStyle = "white";
+ctx.fillRect(cw/2 - linewidth/2, lineposition, linewidth, linheight);
+
+}
+
+
+
+}
+
+function ball()
+{
+ctx.fillStyle = "#001f3f";
+ctx.fillRect(ballX , ballY, ballsize, ballsize);
+
+ballX += balspeedX;
+ballY += balspeedY;
+
+}
+
+
+function paddle1 ()
+
+{
+ctx.fillStyle = "green";
+ctx.fillRect(possitionXLEFT, possitionXUP, paddleW, paddleH);
+
+}
+
+function paddle2()
+
+
+{
+ctx.fillStyle ="green";
+ctx.fillRect(possitionYlEFT, possitionYUP, paddleW, paddleH);
+
+
+}
+
+function game()
+{
+table()
+ball()
+paddle1()
+paddle2()
+}
+
+
+setInterval(game,1000/60);
+</script>
+
+
+</body>
+</html>
