@@ -32,6 +32,7 @@ background-color: #393939;
 
 </head>
 <body>
+
 <canvas></canvas>	
 
 <script>
@@ -45,7 +46,7 @@ canvas.height = 600;
 const cw = canvas.width;
 const ch =canvas.height;
 
-const ballsize = 22;
+const ballsize = 18;
 let ballX = cw/2 - ballsize/2;          //miejsce, położenie piłki  0dejmujemy bo piłka też zajmuj emiejsce
 let ballY = ch/2 - ballsize/2;
 
@@ -61,8 +62,8 @@ let possitionYUP = 265;
 const linewidth = 4;
 const linheight = 8;
 
-let balspeedX = 3;
-let balspeedY= 3;
+let balspeedX = 4;          //PRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEEDDDDDDDDDDDDDDDDKOOOOOOOOSSSSSSSSSSCCCCCCCCCCCCCC
+let balspeedY= 5;
 
 
 function table()
@@ -91,8 +92,25 @@ ctx.fillRect(ballX , ballY, ballsize, ballsize);
 ballX += balspeedX;
 ballY += balspeedY;
 
+
+if ( ballY <= 0 || ballY +ballsize >= ch) {
+
+balspeedY = -balspeedY;
+
 }
 
+if ( ballX <= 0 || ballX + ballsize >= cw) {
+
+balspeedX = -balspeedX;
+
+}
+
+
+
+
+
+
+}
 
 function paddle1 ()
 
