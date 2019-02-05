@@ -63,7 +63,7 @@ const linewidth = 4;
 const linheight = 8;
 
 let balspeedX = 4;          //PRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEEDDDDDDDDDDDDDDDDKOOOOOOOOSSSSSSSSSSCCCCCCCCCCCCCC
-let balspeedY= 5;
+let balspeedY= 4;
 
 
 function table()
@@ -97,11 +97,15 @@ if ( ballY <= 0 || ballY +ballsize >= ch) {
 
 balspeedY = -balspeedY;
 
+speedup();
+
 }
 
 if ( ballX <= 0 || ballX + ballsize >= cw) {
 
 balspeedX = -balspeedX;
+
+speedup();
 
 }
 
@@ -130,12 +134,151 @@ ctx.fillRect(possitionYlEFT, possitionYUP, paddleW, paddleH);
 
 }
 
+// funkcja do ruszania rakietek add event listener
+
+
+topCanvas = canvas.offsetTop;
+console.log(topCanvas)
+
+
+function playerposition(e) {
+		//console.log("pozycja myszy to " +(e.clientY - topCanvas));
+	
+	possitionXUP = e.clientY - topCanvas -paddleH /2;	
+
+  
+
+if(possitionXUP >= ch -paddleH) {
+	possitionXUP = ch -paddleH
+}
+
+
+if(possitionXUP <= 0){
+	possitionXUP = 0;
+}
+
+ if (ballX - paddleW <= possitionXLEFT && ballY >= possitionXUP - ballsize && ballY <= possitionXUP + paddleH){
+    balspeedX = -balspeedX;
+   }
+
+
+}
+canvas.addEventListener("mousemove",playerposition)     // ruch dla lewej rakietki 
+	   // może bbyć window zamias t cnavas
+
+
+
+/*
+function playerposition1(e) {
+		//console.log("pozycja myszy to " +(e.clientY - topCanvas));
+	
+	possitionYUP = e.clientY - topCanvas -paddleH /2;	
+
+
+
+
+if(possitionYUP >= ch -paddleH) {
+	possitionYUP = ch -paddleH
+}
+
+
+if(possitionYUP <= 0){
+	possitionYUP = 0;
+}
+
+}
+canvas.addEventListener("mousemove",playerposition1)     // ruch dla prawej rakietki       nie zadziałało  possitionXUP = possitionYUP
+	   // może bbyć window zamias t cnavas
+*/
+
+
+
+
+
+function speedup(){
+	console.log("balspeedX")
+	// predkosc x
+	if (balspeedX > 0 && balspeedX < 12) {
+		balspeedX += 2;
+	}
+	else if (balspeedX <0 && balspeedX > -12)
+
+	{
+		balspeedX -= 2;
+
+	}	
+
+	// predkosc Y
+
+	if (balspeedY > 0 && balspeedY < 12) {
+		balspeedY += 2;
+	}
+	else if (balspeedY <0 && balspeedY > -12)
+
+	{
+		balspeedY -= 2;
+
+	}	
+	}
+
+function aiPosition(){
+
+var  middlePaddel = possitionYUP + paddleH/2;  // moze być też const
+var middleBall = ballY + ballsize/2;
+
+if(ballX > 600 ){
+
+if( middlePaddel -middleBall >265){
+//console.log("więcej niż 200 ");
+
+possitionYUP  -= 20;
+}
+else if( middlePaddel -middleBall >50){
+//console.log("mniej niż 200 ");
+possitionYUP -= 13;
+}
+else if( middlePaddel -middleBall <-265){
+//console.log("<-265");
+possitionYUP +=20;
+}
+
+else if( middlePaddel -middleBall <-50){
+//console.log("_(50) -200 ");
+possitionYUP +=13;
+}
+}
+else if(ballX <= 600 && ballX >265)
+{
+if( middlePaddel -middleBall >100){
+//console.log("więcej niż 200 ");
+
+possitionYUP  -= 3;
+}
+
+else if( middlePaddel -middleBall <-100){
+//console.log("więcej niż 200 ");
+
+possitionYUP  -= 3;
+}
+
+
+
+}
+
+if (ballX + ballsize >= possitionYlEFT && ballY <= possitionYUP + paddleH && ballY >= possitionYUP - ballsize){
+    balspeedX = -balspeedX;
+   }
+
+}
+
+
 function game()
 {
 table()
 ball()
 paddle1()
 paddle2()
+aiPosition()
 }
 
 
